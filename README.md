@@ -1,60 +1,52 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
-
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
-
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
-
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
-
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.com/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.com/yiisoft/yii2-app-advanced)
-
-DIRECTORY STRUCTURE
+APACHE CONFIG
 -------------------
 
 ```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
+<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host.example.com
+    DocumentRoot "d:/wamp64/www/luxxy"
+    ServerName luxxy.local
+    ServerAlias luxxy.local
+    ErrorLog "logs/luxxy-error.log"
+    CustomLog "logs/luxxy-access.log" common
+	RewriteEngine on
+	RewriteCond %{REQUEST_URI} !^/(backend/web|admin)
+	RewriteRule !^/frontend/web /frontend/web%{REQUEST_URI} [L]
+    	RewriteCond %{REQUEST_URI} ^/admin$
+    	RewriteRule ^/admin /backend/web/index.php [L]
+	RewriteCond %{REQUEST_URI} ^/admin
+	RewriteRule ^/admin(.*) /backend/web$1 [L]
+
+
+	<Directory />
+        	Options FollowSymLinks
+        	AllowOverride None
+        	AddDefaultCharset utf-8
+    	</Directory>
+    	<Directory "d:/wamp64/www/luxxy/frontend/web/">
+        	RewriteEngine on
+        	# if a directory or a file exists, use the request directly
+        	RewriteCond %{REQUEST_FILENAME} !-f
+        	RewriteCond %{REQUEST_FILENAME} !-d
+        	# otherwise forward the request to index.php
+        	RewriteRule . index.php
+        	Order Allow,Deny
+        	Allow from all
+    	</Directory>
+	 <Directory "d:/wamp64/www/luxxy/backend/web/">
+        	RewriteEngine on
+        	# if a directory or a file exists, use the request directly
+        	RewriteCond %{REQUEST_FILENAME} !-f
+        	RewriteCond %{REQUEST_FILENAME} !-d
+        	# otherwise forward the request to index.php
+        	RewriteRule . index.php
+        	Order Allow,Deny
+        	Allow from all
+    	</Directory>
+	<FilesMatch \.(htaccess|htpasswd|svn|git)>
+        	Deny from all
+        	Satisfy All
+    	</FilesMatch>
+
+</VirtualHost>
 ```

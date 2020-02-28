@@ -35,7 +35,13 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    
+    $menuItems = [
+        ['label' => 'Управление библиотекой', 'url' => ['/admin']],
+    ];
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => $menuItems,
+    ]);
     NavBar::end();
     ?>
 

@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
-    'name' => 'Admin panel',
+    'name' => 'Управление библиотекой',
     'homeUrl' => '/admin',
     'defaultRoute' => 'books/index',
     'components' => [
@@ -54,6 +54,14 @@ return [
                 'book-relation-author/index/<id_book:\d+>' => 'book-relation-author/index',
                 'book-relation-author/create/<id_book:\d+>' => 'book-relation-author/create',
             ],
+        ],
+        'urlManagerFrontend' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => '',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            //'rules' => require(__DIR__ . '/../../frontend/config/urls.php'),
         ],
     ],
     'params' => $params,

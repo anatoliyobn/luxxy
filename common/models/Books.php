@@ -44,9 +44,10 @@ class Books extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'pages' => 'Pages',
-            'date_of_issue' => 'Date Of Issue',
+            'title' => 'Название',
+            'pages' => 'Количество Страниц',
+            'date_of_issue' => 'Год выпуска',
+            'authorId' => 'Авторы'
         ];
     }
 
@@ -68,5 +69,25 @@ class Books extends \yii\db\ActiveRecord
     public function getAuthors()
     {
         return $this->hasMany(Authors::className(), ['id' => 'id_author'])->viaTable('{{%book_relation_author}}', ['id_book' => 'id']);
+    }
+    
+    /**
+     * Select authors for book.
+     * If not authors return null
+     * @return null|string
+     */
+    public function getAuthorsInStr()
+    {
+        $authors = $this->authors;
+        if (!$authors) {
+            return null;
+        }
+        
+        $authorsList = [];
+        foreach ($authors as $author) {
+            $authorsList[] = $author->surname . ' ' . $author->name;
+        }
+        
+        return implode("<br>", $authorsList);        
     }
 }

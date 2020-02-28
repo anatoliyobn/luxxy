@@ -12,7 +12,7 @@ class Authors extends \common\models\Authors
      */
     public static function authorsListName()
     {
-        return ArrayHelper::map(self::authorsList(), 'id', 'surname');
+        return ArrayHelper::map(self::authorsList(), 'id', 'fullName');
     }
     
     /**
@@ -22,7 +22,16 @@ class Authors extends \common\models\Authors
      */
     private static function authorsList()
     {
-        return self::find()->asArray()->all();
+        return self::find()->all();
+    }
+    
+    /**
+     * Get full name for authors
+     * 
+     * @return string
+     */
+    public function getFullName() {
+       return $this->surname . ' ' . $this->name;
     }
     
     /**

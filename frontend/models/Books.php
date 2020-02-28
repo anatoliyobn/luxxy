@@ -1,7 +1,7 @@
 <?php
-namespace backend\models;
+namespace frontend\models;
 
 class Books extends \common\models\Books
 {    
-
+    
 }

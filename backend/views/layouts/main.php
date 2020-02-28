@@ -38,6 +38,7 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Авторы', 'url' => ['/authors']],
         ['label' => 'Книги', 'url' => ['/books']],
+        ['label' => 'Библиотека', 'url' => Yii::$app->urlManagerFrontend->createUrl('/')],
     ];
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
